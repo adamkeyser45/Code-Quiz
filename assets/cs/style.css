@@ -5,15 +5,40 @@ header {
     justify-content: space-evenly;
     align-items: baseline;
     margin-bottom: 20px;
+    padding: 0 5%;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 body {
     background-color: cadetblue;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .quiz-container {
     background-color: lightgrey;
     margin: 50px;
-    height: 250px;
+    height: auto;
+}
+
+.quiz-container p {
+    display: flex;
+    justify-content: center;
+    font-size: x-large;
+    border-bottom: solid;
+    padding: 30px 10px;
+    margin: 0;
+}
+
+.quiz-container ul {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+}
+
+.quiz-container button {
+    margin: 5px;
+    width: 90%;
+    height: 80px;
+    font-size: 20px;
 }
 
