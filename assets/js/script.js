@@ -1,9 +1,5 @@
 // PLAN
 
-//Function for checking answers
-// -When choice is correct, display 'RIGHT' and move to next question.
-// -When choice is wrong, display 'WRONG', deduct time from timer, and move on to next question.
-
 // Function for when timer gets to 0 or last question is answered
 // -Display alert that says the game is over and displays score
 // -if score > highscore, display alert that they have the high score and to type in initials
@@ -43,22 +39,15 @@ var questions = [
 ];
 
 var startQuiz = function() {
+    time = 10;
 
     var timeInterval = setInterval(function() {
         if (time >= 0) {
             timeLeft.textContent = time;
             time--;
-            
         } else {
-            timeLeft.textContent = '';
             clearInterval(timeInterval);
-            questionSpan.textContent = "Quiz Over!";
-            choice1.textContent = "Press start";
-            choice2.textContent = "to try again!";         
-            window.alert("Time's up!");
-            startButton.removeAttribute("disabled");
-            choice1.setAttribute("disabled", "disabled");
-            choice2.setAttribute("disabled", "disabled");
+            quizEnd();
         }
     }, 1000);
     startButton.setAttribute("disabled", "disabled");
@@ -77,7 +66,9 @@ var setNewQuestion = function() {
         questionSpan.textContent = newQuestion;
         choice1.textContent = answerA;
         choice2.textContent = answerB;
-    };     
+    } else {
+        quizEnd();
+    }     
 };
 
 var checkAnswer1 = function() {
@@ -94,6 +85,7 @@ var checkAnswer1 = function() {
     // Then set a new question
     currentQuestion++;
     setNewQuestion();
+    console.log(currentQuestion);
 };
 
 var checkAnswer2 = function() {
@@ -110,7 +102,20 @@ var checkAnswer2 = function() {
     // Then set a new question
     currentQuestion++;
     setNewQuestion();
+    console.log(currentQuestion);
 };
+
+var quizEnd = function() {
+    questionSpan.textContent = "Quiz Over!";
+    choice1.textContent = "Press start";
+    choice2.textContent = "to try again!";         
+    window.alert("Quiz Over!");
+    startButton.removeAttribute("disabled");
+    choice1.setAttribute("disabled", "disabled");
+    choice2.setAttribute("disabled", "disabled");
+}
+
+
 
 choice1.addEventListener("click", checkAnswer1);
 choice2.addEventListener("click", checkAnswer2)
