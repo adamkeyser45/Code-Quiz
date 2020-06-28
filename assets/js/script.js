@@ -12,6 +12,10 @@ var questionSpan = document.querySelector("#question");
 var choice1 = document.querySelector("#choice1");
 var choice2 = document.querySelector("#choice2");
 var rightWrong = document.querySelector("#rightWrong");
+
+localStorage.setItem("highscore", 0);
+var highScoreInitials = document.querySelector("#highScoreInitials");
+
 var currentQuestion = 0;
 var time = 10;
 
@@ -42,10 +46,10 @@ var startQuiz = function() {
     time = 10;
 
     var timeInterval = setInterval(function() {
-        if (time >= 0) {
+        if (time > 0) {
             timeLeft.textContent = time;
             time--;
-        } else {
+        } else if (time === 0) {
             clearInterval(timeInterval);
             quizEnd();
         }
@@ -85,7 +89,6 @@ var checkAnswer1 = function() {
     // Then set a new question
     currentQuestion++;
     setNewQuestion();
-    console.log(currentQuestion);
 };
 
 var checkAnswer2 = function() {
@@ -102,21 +105,33 @@ var checkAnswer2 = function() {
     // Then set a new question
     currentQuestion++;
     setNewQuestion();
-    console.log(currentQuestion);
 };
 
 var quizEnd = function() {
+       
     questionSpan.textContent = "Quiz Over!";
     choice1.textContent = "Press start";
     choice2.textContent = "to try again!";         
-    window.alert("Quiz Over!");
     startButton.removeAttribute("disabled");
     choice1.setAttribute("disabled", "disabled");
     choice2.setAttribute("disabled", "disabled");
-}
+
+    window.alert("Quiz Over!");
+    var score = time;
+
+    // Alert the user of their score and store the score to localStorage
+    window.alert("Your final score is: " + score);
+    localStorage.setItem("score", score);
+
+    // // If the score is greater than highscore, then prompt them to enter their initials
+    // if (score > localStorage.getItem("highscore")) {
+    //     window.prompt("Congratulations! You have made the highscore! Enter your initials below!") = highScoreInitials.textContent;
+
+
+    }
 
 
 
 choice1.addEventListener("click", checkAnswer1);
-choice2.addEventListener("click", checkAnswer2)
+choice2.addEventListener("click", checkAnswer2);
 startButton.addEventListener("click", startQuiz);
