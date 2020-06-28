@@ -9,9 +9,13 @@ var rightWrong = document.querySelector("#rightWrong");
 
 var showHighScoreInitials = document.querySelector("#highScoreInitials");
 showHighScoreInitials.textContent = localStorage.getItem("highScoreInitials");
+var showLastScoreInitials = document.querySelector("#lastScoreInitials");
+showLastScoreInitials.textContent = localStorage.getItem("lastScoreInitials");
 
 var showHighScore = document.querySelector("#highScore");
 showHighScore.textContent = localStorage.getItem("highScore");
+var showLastScore = document.querySelector("#lastScore");
+showLastScore.textContent = localStorage.getItem("lastScore");
 
 var currentQuestion = 0;
 var time = "";
@@ -184,10 +188,16 @@ var quizEnd = function() {
       var highScoreInitials = window.prompt("Congratulations! You have the highscore! Type in your initials below!")
       localStorage.setItem("highScoreInitials", highScoreInitials);
       localStorage.setItem("highScore", score);
+      showHighScoreInitials.textContent = localStorage.getItem("highScoreInitials");
+      showHighScore.textContent = localStorage.getItem("highScore");
 
-    } // If the user didn't get the highscore, alert the user of their score and store
+    } // If the user didn't get the highscore, alert the user of their score and store their score and intitials
     else {    
-        window.alert("Your final score is: " + score);
+       var lastScoreInitials = window.prompt("Your final score is: " + score + ". Type in your initials below!");
+       localStorage.setItem("lastScoreInitials", lastScoreInitials);
+       localStorage.setItem("lastScore", score);
+       showLastScoreInitials.textContent = localStorage.getItem("lastScoreInitials");
+       showLastScore.textContent = localStorage.getItem("lastScore");
     }
 };
 
