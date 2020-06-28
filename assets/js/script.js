@@ -49,14 +49,15 @@ var questions = [
 
 var startQuiz = function() {
     currentQuestion = 0;
-    time = 20;
+    time = 60;
 
     var timeInterval = setInterval(function() {
         if (time > 0 && currentQuestion < questions.length) {
-            timeLeft.textContent = time;
             time--;
+            timeLeft.textContent = time;
         } else {
             clearInterval(timeInterval);
+            quizEnd();
         }
     }, 1000);
     startButton.setAttribute("disabled", "disabled");
@@ -81,9 +82,7 @@ var setNewQuestion = function() {
         choice2.textContent = answerB;
         choice3.textContent = answerC;
         choice4.textContent = answerD;
-    } else {
-        quizEnd();
-    }     
+    }    
 };
 
 var checkAnswer1 = function() {
