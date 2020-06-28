@@ -13,11 +13,14 @@ var choice1 = document.querySelector("#choice1");
 var choice2 = document.querySelector("#choice2");
 var rightWrong = document.querySelector("#rightWrong");
 
-localStorage.setItem("highscore", 0);
-var highScoreInitials = document.querySelector("#highScoreInitials");
+var showHighScoreInitials = document.querySelector("#highScoreInitials");
+showHighScoreInitials.textContent = localStorage.getItem("highScoreInitials");
+
+var showHighScore = document.querySelector("#highScore");
+showHighScore.textContent = localStorage.getItem("highScore");
 
 var currentQuestion = 0;
-var time = 10;
+var time = "";
 
 var questions = [
     {
@@ -46,12 +49,11 @@ var startQuiz = function() {
     time = 10;
 
     var timeInterval = setInterval(function() {
-        if (time > 0) {
+        if (time > 0 && currentQuestion < questions.length) {
             timeLeft.textContent = time;
             time--;
-        } else if (time === 0) {
+        } else {
             clearInterval(timeInterval);
-            quizEnd();
         }
     }, 1000);
     startButton.setAttribute("disabled", "disabled");
@@ -88,6 +90,7 @@ var checkAnswer1 = function() {
     }
     // Then set a new question
     currentQuestion++;
+    console.log(currentQuestion);
     setNewQuestion();
 };
 
@@ -104,11 +107,12 @@ var checkAnswer2 = function() {
     }
     // Then set a new question
     currentQuestion++;
+    console.log(currentQuestion);
     setNewQuestion();
 };
 
 var quizEnd = function() {
-       
+    
     questionSpan.textContent = "Quiz Over!";
     choice1.textContent = "Press start";
     choice2.textContent = "to try again!";         
@@ -117,20 +121,19 @@ var quizEnd = function() {
     choice2.setAttribute("disabled", "disabled");
 
     window.alert("Quiz Over!");
-    var score = time;
+    var score = time; 
 
-    // Alert the user of their score and store the score to localStorage
-    window.alert("Your final score is: " + score);
-    localStorage.setItem("score", score);
+    // If the score is greater than highscore, then prompt them to enter their initials
+    if (score > localStorage.getItem("highScore")) {
+      var highScoreInitials = window.prompt("Congratulations! You have the highscore! Type in your initials below!")
+      localStorage.setItem("highScoreInitials", highScoreInitials);
+      localStorage.setItem("highScore", score);
 
-    // // If the score is greater than highscore, then prompt them to enter their initials
-    // if (score > localStorage.getItem("highscore")) {
-    //     window.prompt("Congratulations! You have made the highscore! Enter your initials below!") = highScoreInitials.textContent;
-
-
+    } else {
+        // Alert the user of their score and store the score to localStorage
+        window.alert("Your final score is: " + score);
     }
-
-
+};
 
 choice1.addEventListener("click", checkAnswer1);
 choice2.addEventListener("click", checkAnswer2);
