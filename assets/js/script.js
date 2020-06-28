@@ -1,11 +1,3 @@
-// PLAN
-
-// Function for when timer gets to 0 or last question is answered
-// -Display alert that says the game is over and displays score
-// -if score > highscore, display alert that they have the high score and to type in initials
-// -display highscore to highscore section in header
-
-
 var startButton = document.querySelector("#start-button");
 var timeLeft = document.querySelector("#countDownClock");
 var questionSpan = document.querySelector("#question");
@@ -24,42 +16,62 @@ showHighScore.textContent = localStorage.getItem("highScore");
 var currentQuestion = 0;
 var time = "";
 
+// Array that holds the quiz questions
 var questions = [
     {
-        question: 'What color is the sky?',
-        answers: {a: 'red', b: 'blue', c: 'green', d: 'orange'},
-        correct: 'blue'
+        question: 'Inside which HTML element do we put the JavaScript?',
+        answers: {a: '<scripting>', b: '<js>', c: '<javascript>', d: '<script>'},
+        correct: '<script>'
     },
     {
-        question: 'What color is grass?',
-        answers: {a: 'green', b: 'purple', c: 'blue', d: 'orange'},
-        correct: 'green'
+        question: 'What is the correct JavaScript syntax to change the content of the HTML of something?',
+        answers: {a: '.innerHTML', b: 'document.prompt', c: 'html.change', d: '<html>'},
+        correct: '.innerHTML'
     },
     {
-        question: 'What is 4 + 4?',
-        answers: {a: '8', b: '7', c: '10', d: '44'},
-        correct: '8'
+        question: 'Where is the correct place to insert a JavaScript?',
+        answers: {a: 'the <head> section', b: 'the <body> section', c: 'in the style sheet', d: 'It does not matter'},
+        correct: 'the <body> section'
     },
     {
-        question: 'How many sideds are on a triangle?',
-        answers: {a: 'four', b: 'three', c: 'nine', d: 'one'},
-        correct: 'three'
+        question: 'What is the correct syntax for referring to an external script called "xxx.js"?',
+        answers: {a: '<script href="xxx.js">', b: '<script src="xxx.js">', c: '<script tag="xxx.js">', d: '<script name="xxx.js">'},
+        correct: '<script src="xxx.js">'
+    },
+    {
+        question: 'Should the external JavaScript file contain the <script> tag?',
+        answers: {a: 'Yes, always', b: 'Only if you include the correct ID', c: 'No, you should not do this', d: 'It does not matter.'},
+        correct: 'No, you should not do this'
+    },
+    {
+        question: 'How do you write "Hello World" in an alert box?',
+        answers: {a: 'alertBox("Hello World");', b: 'msg("Hello World");', c: 'alert("Hello World");', d: 'msgBox("Hello World");'},
+        correct: 'alert("Hello World");'
+    },
+    {
+        question: 'How do you create a function in JavaScript?',
+        answers: {a: 'function = myFunction()', b: 'function myFunction()', c: 'function:myFunction()', d: 'all of these will work'},
+        correct: 'function myFunction()'
     }
 ];
 
 var startQuiz = function() {
     currentQuestion = 0;
     time = 60;
-
+    // Countdown timer Loop
     var timeInterval = setInterval(function() {
+        // When time is greater than 0 or there are still questions left
         if (time > 0 && currentQuestion < questions.length) {
             time--;
             timeLeft.textContent = time;
-        } else {
+        } 
+        // When time is up or there are no more questions, end the quiz with quizEnd()
+        else {
             clearInterval(timeInterval);
             quizEnd();
         }
     }, 1000);
+    // Enables multiple choice buttons and disables start button and sets the first question
     startButton.setAttribute("disabled", "disabled");
     choice1.removeAttribute("disabled");
     choice2.removeAttribute("disabled");
@@ -69,7 +81,7 @@ var startQuiz = function() {
 };
 
 var setNewQuestion = function() {
-     
+    // If there are still questions left in the array, then load the button's text with the responses from the array
     if (currentQuestion < questions.length) {
         var newQuestion = questions[currentQuestion].question;
         var answerA = questions[currentQuestion].answers.a;
@@ -151,6 +163,7 @@ var checkAnswer4 = function() {
 
 var quizEnd = function() {
     
+    // Disable answer choices and display text letting the user know the game is over and what to do to restart
     questionSpan.textContent = "Quiz Over!";
     choice1.textContent = "Press";
     choice2.textContent = "start";
@@ -172,8 +185,8 @@ var quizEnd = function() {
       localStorage.setItem("highScoreInitials", highScoreInitials);
       localStorage.setItem("highScore", score);
 
-    } else {
-        // Alert the user of their score and store the score to localStorage
+    } // If the user didn't get the highscore, alert the user of their score and store
+    else {    
         window.alert("Your final score is: " + score);
     }
 };
