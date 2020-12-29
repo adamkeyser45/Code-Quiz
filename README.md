@@ -1,4 +1,4 @@
-# mod4challenge
+# Code-Quiz
 A timed quiz on JavaScript fundamentals that stores the high score.
 
 ## Description: 
